@@ -45,7 +45,7 @@ public class CreateProjectTest extends BaseTest {
 
     @Test
     public void createProjectFailureTest() {
-        SelenideElement errorField = addProjectStep.createProjectIncorrect(new Project()).errorField;
+        SelenideElement errorField = addProjectStep.createProjectIncorrect().errorField;
 
         errorField.shouldBe(Condition.visible);
         errorField.shouldHave(Condition.text("Field Name is a required field."));

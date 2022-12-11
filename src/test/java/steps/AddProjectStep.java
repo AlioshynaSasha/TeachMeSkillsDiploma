@@ -12,18 +12,6 @@ public class AddProjectStep {
     }
 
     public ProjectsPage createProjectSuccessful(Project project) {
-        createProject(project);
-
-        return new ProjectsPage();
-    }
-
-    public AddProjectPage createProjectIncorrect(Project project) {
-        createProject(project);
-
-        return addProjectPage;
-    }
-
-    private void createProject(Project project) {
         addProjectPage.name.sendKeys(project.getName());
         addProjectPage.announcement.sendKeys(project.getAnnouncement());
         addProjectPage.types.get(project.getType()).click();
@@ -33,5 +21,13 @@ public class AddProjectStep {
         }
 
         addProjectPage.addButton.click();
+
+        return new ProjectsPage();
+    }
+
+    public AddProjectPage createProjectIncorrect() {
+        addProjectPage.addButton.click();
+
+        return addProjectPage;
     }
 }
