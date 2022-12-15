@@ -1,4 +1,4 @@
-package steps;
+package steps.projects;
 
 import models.Project;
 import pages.projects.AddProjectPage;

@@ -11,7 +11,7 @@ import org.apache.http.protocol.HTTP;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.projects.ProjectsPage;
-import steps.DeleteProjectStep;
+import steps.projects.DeleteProjectStep;
 import utils.Endpoints;
 
 import java.io.IOException;
@@ -27,9 +27,7 @@ public class DeleteProjectTest extends BaseTest {
     public void setUp() {
         super.setUp();
 
-        loginStep.loginSuccessful(
-                new User(ReadProperties.username(), ReadProperties.password())
-        );
+        loginStep.loginSuccessful(new User(ReadProperties.username(), ReadProperties.password()));
     }
 
     @Test

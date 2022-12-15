@@ -11,7 +11,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.projects.ProjectsPage;
-import steps.AddProjectStep;
+import steps.projects.AddProjectStep;
 
 import java.util.Objects;
 

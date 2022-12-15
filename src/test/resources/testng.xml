@@ -10,6 +10,7 @@
         <classes>
             <class name="tests.gui.CreateProjectTest"/>
             <class name="tests.gui.DeleteProjectTest"/>
+            <class name="tests.gui.FileUploaderTest"/>
         </classes>
     </test>
 </suite>
