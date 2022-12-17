@@ -9,7 +9,7 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class ProjectsPage {
     public final static String pagePath = "index.php?/admin/projects/overview";
-    public final String deleteProjectLocator = ".//a[contains(@onclick, 'projects/delete/')]";
+    public final By deleteProjectLocator = By.xpath(".//a[contains(@onclick, 'projects/delete/')]");
     public final String getProjectLocator = ".//a[contains(@href, 'projects/edit/%d')]";
     public SelenideElement title = $(By.className("page_title"));
     public List<SelenideElement> projects = $$(By.xpath("//tbody/tr[@class!='header']"));

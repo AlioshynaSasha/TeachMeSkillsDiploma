@@ -2,6 +2,8 @@ package tests.gui;
 
 import baseEntities.BaseTest;
 import configuration.ReadProperties;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.restassured.http.ContentType;
 import models.User;
 import org.apache.http.HttpStatus;
@@ -24,6 +26,8 @@ import java.util.Objects;
 import static com.codeborne.selenide.Selenide.open;
 import static io.restassured.RestAssured.given;
 
+@Epic("GUI Tests")
+@Feature("File uploader Tests")
 public class FileUploaderTest extends BaseTest {
     private int projectId = 0;
 
@@ -35,7 +39,7 @@ public class FileUploaderTest extends BaseTest {
         loginStep.loginSuccessful(new User(ReadProperties.username(), ReadProperties.password()));
     }
 
-    @Test
+    @Test(description = "Checking the file uploader")
     public void uploadFileTest() throws IOException, URISyntaxException {
         projectId = given()
                 .baseUri(ReadProperties.getUrl())

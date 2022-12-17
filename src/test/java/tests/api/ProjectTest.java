@@ -2,6 +2,9 @@ package tests.api;
 
 import baseEntities.BaseApiTest;
 import com.google.gson.Gson;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.restassured.mapper.ObjectMapperType;
 import io.restassured.path.json.JsonPath;
 import models.Project;
@@ -18,10 +21,12 @@ import java.nio.file.Paths;
 
 import static io.restassured.RestAssured.given;
 
+@Epic("API Tests")
+@Feature("Project Tests")
 public class ProjectTest extends BaseApiTest {
     private int projectId;
 
-    @Test
+    @Test(description = "Successful project creation")
     public void createProjectSuccessTest() throws IOException {
         Reader reader = Files.newBufferedReader(Paths.get("src/test/resources/createProjectData.json"));
         Project project = new Gson().fromJson(reader, Project.class);
@@ -41,7 +46,8 @@ public class ProjectTest extends BaseApiTest {
         Assert.assertEquals(responseContent.get("show_announcement"), project.isShowAnnouncement());
     }
 
-    @Test
+    @Test(description = "Failure to create a project")
+    @Description("Creating a project with a name that exceeds the maximum allowed value.")
     public void createProjectFailureTest() {
         Project project = new Project.Builder()
                 .withName(RandomStringUtils.randomAlphabetic(251))
@@ -58,7 +64,7 @@ public class ProjectTest extends BaseApiTest {
         Assert.assertEquals(responseContent.get("error"), "Field :name is too long (250 characters at most).");
     }
 
-    @Test(dependsOnMethods = "createProjectSuccessTest")
+    @Test(dependsOnMethods = "createProjectSuccessTest", description = "Successful project receipt")
     public void getProjectSuccessTest() {
         given()
                 .pathParam("project_id", projectId)
@@ -68,7 +74,7 @@ public class ProjectTest extends BaseApiTest {
                 .statusCode(HttpStatus.SC_OK);
     }
 
-    @Test
+    @Test(description = "Receiving a non-existent project")
     public void getProjectWithNotFoundTest() {
         JsonPath responseContent = given()
                 .pathParam("project_id", 0)
@@ -81,7 +87,7 @@ public class ProjectTest extends BaseApiTest {
         Assert.assertEquals(responseContent.get("error"), "Field :project_id is not a valid or accessible project.");
     }
 
-    @Test
+    @Test(description = "Receiving a project with an invalid identifier")
     public void getProjectWithInvalidIdTest() {
         JsonPath responseContent = given()
                 .pathParam("project_id", "invalidId")
@@ -94,7 +100,10 @@ public class ProjectTest extends BaseApiTest {
         Assert.assertEquals(responseContent.get("error"), "Field :project_id is not a valid ID.");
     }
 
-    @Test(dependsOnMethods = {"createProjectSuccessTest", "getProjectSuccessTest"})
+    @Test(
+            dependsOnMethods = {"createProjectSuccessTest", "getProjectSuccessTest"},
+            description = "Successful project deletion"
+    )
     public void deleteProjectSuccessTest() {
         given()
                 .pathParam("project_id", projectId)
@@ -104,7 +113,7 @@ public class ProjectTest extends BaseApiTest {
                 .statusCode(HttpStatus.SC_OK);
     }
 
-    @Test
+    @Test(description = "Deleting a non-existent project")
     public void deleteProjectWithNotFoundTest() {
         JsonPath responseContent = given()
                 .pathParam("project_id", 0)
@@ -115,16 +124,5 @@ public class ProjectTest extends BaseApiTest {
                 .extract().jsonPath();
 
         Assert.assertEquals(responseContent.get("error"), "Field :project_id is not a valid or accessible project.");
-    }
-
-    @Test
-    public void defectTest() {
-        given()
-                .pathParam("project_id", 0)
-                .when()
-                .post(Endpoints.DELETE_PROJECT)
-                .then()
-                .statusCode(HttpStatus.SC_OK)
-                .extract().jsonPath();
     }
 }

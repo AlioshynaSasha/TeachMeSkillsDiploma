@@ -4,6 +4,8 @@ import baseEntities.BaseTest;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import configuration.ReadProperties;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
 import models.User;
@@ -21,6 +23,8 @@ import java.nio.file.Paths;
 import static com.codeborne.selenide.Selenide.open;
 import static io.restassured.RestAssured.given;
 
+@Epic("GUI Tests")
+@Feature("Project Tests")
 public class DeleteProjectTest extends BaseTest {
     @BeforeMethod
     @Override
@@ -30,7 +34,7 @@ public class DeleteProjectTest extends BaseTest {
         loginStep.loginSuccessful(new User(ReadProperties.username(), ReadProperties.password()));
     }
 
-    @Test
+    @Test(description = "Successful project deletion")
     public void deleteProjectTest() throws IOException {
         int projectId = given()
                 .baseUri(ReadProperties.getUrl())

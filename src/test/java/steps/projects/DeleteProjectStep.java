@@ -14,7 +14,7 @@ public class DeleteProjectStep {
     }
 
     public void deleteProject(SelenideElement project) {
-        project.$(By.xpath(projectsPage.deleteProjectLocator)).click();
+        project.$(projectsPage.deleteProjectLocator).click();
         SelenideElement dialogWindow = $(By.id("deleteDialog"));
         dialogWindow.$(By.name("deleteCheckbox")).click();
         dialogWindow.$(By.className("button-ok")).click();
