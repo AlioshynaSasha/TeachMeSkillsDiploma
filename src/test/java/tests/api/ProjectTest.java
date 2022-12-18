@@ -125,4 +125,16 @@ public class ProjectTest extends BaseApiTest {
 
         Assert.assertEquals(responseContent.get("error"), "Field :project_id is not a valid or accessible project.");
     }
+
+    @Test(description = "Defect test")
+    @Description("Specially unsuccessful test.")
+    public void defectTest() {
+        given()
+                .pathParam("project_id", 0)
+                .when()
+                .post(Endpoints.DELETE_PROJECT)
+                .then()
+                .statusCode(HttpStatus.SC_OK)
+                .extract().jsonPath();
+    }
 }
